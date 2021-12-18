@@ -12,9 +12,12 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
@@ -63,11 +66,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             @SuppressLint("MissingPermission")
             override fun surfaceCreated(p0: SurfaceHolder) {
                 try {
-                    if (isCameraPermissionGranted()) {
+                    //if (isCameraPermissionGranted()) {
                         mCameraSource.start(binding.surfaceCameraPreview.holder)
-                    } else {
-                        requestForPermission()
-                    }
+                    //} else {
+                        //requestForPermission()
+                    //}
                 } catch (e: Exception) {
                     toast("Error:" + e.message)
                 }
@@ -162,6 +165,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             tts!!.stop()
             tts!!.shutdown()
         }
+        if(mCameraSource != null) {
+            mCameraSource!!.stop()
+            mCameraSource!!.release()
+        }
         super.onDestroy()
     }
 
@@ -204,5 +211,45 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.about -> {
+                showDefaultDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showDefaultDialog() {
+        val alertDialog = AlertDialog.Builder(this)
+
+        alertDialog.apply {
+            setTitle("About")
+            setMessage("This App was developed Microlink It College students Departement of Computer Science Section 3" +
+                    " for inclusiveness course to help the blind to read. \n \n" +
+                    "1.Abreham Alemayehu\n" +
+                    "2.Amanuel G/egziabher\n" +
+                    "3.Yohannes Tezera\n" +
+                    "4.Abenezer Teshome\n" +
+                    "5.Oftanan Tamirat \n" +
+                    "6.Abdi Yoseph\n" +
+                    "7.Sinbo Gudeta\n" +
+                    "8.Sadik Aman\n" +
+                    "9.Rahel Bekele\n" +
+                    "10.Abenezer Belachew")
+
+            setPositiveButton(android.R.string.yes) { _,_ ->
+
+            }
+
+        }.create().show()
     }
 }

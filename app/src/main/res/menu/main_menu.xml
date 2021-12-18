@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
+    <!--<item
         android:id="@+id/flashLight"
         android:icon="@drawable/ic_flashlight"
         app:showAsAction="always"
-        android:title="flashlight" />
+        android:title="flashlight" />-->
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="always"
+        android:title="About" />
 </menu>
